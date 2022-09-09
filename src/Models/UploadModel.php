@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace LaravelHelperObjectTools\Models;
 
-use App\Traits\UploadAble;
+use LaravelHelperObjectTools\Models\BaseModel;
 use Spatie\Image\Exceptions\InvalidManipulation;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia;

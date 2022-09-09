@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace LaravelHelperObjectTools\Traits;
 
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Support\MediaStream;
@@ -21,7 +21,7 @@ trait DownloadAble
 
         // Download the files associated with the media in a streamed way.
         // No prob if your files are very large.
-        return MediaStream::create(Str::random(40).'.zip')->addMedia($downloads);
+        return MediaStream::create(Str::random(40) . '.zip')->addMedia($downloads);
     }
 
     /**

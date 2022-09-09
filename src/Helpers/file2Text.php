@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers;
+namespace LaravelHelperObjectTools\Helpers;
 
 use DOMDocument;
 use ZipArchive;
@@ -69,7 +69,7 @@ class file2Text
                         $output .= chr($codeHigh * 16 + $code);
                     }
 
-                    $isOdd = ! $isOdd;
+                    $isOdd = !$isOdd;
                     break;
             }
         }
@@ -156,7 +156,7 @@ class file2Text
     private function getObjectOptions($object)
     {
         $options = [];
-        if (! preg_match('#<<(.*)>>#ismU', $object, $options)) {
+        if (!preg_match('#<<(.*)>>#ismU', $object, $options)) {
             return $options;
         }
         $options = explode('/', $options[1]);
@@ -184,7 +184,7 @@ class file2Text
         if (empty($options['Filter'])) {
             $data = $stream;
         } else {
-            $length = ! empty($options['Length']) ? $options['Length'] : strlen($stream);
+            $length = !empty($options['Length']) ? $options['Length'] : strlen($stream);
             $_stream = substr($stream, 0, $length);
 
             foreach ($options as $key => $value) {
@@ -277,7 +277,7 @@ class file2Text
                             if (isset($transformations[$chex])) {
                                 $chex = $transformations[$chex];
                             }
-                            $document .= html_entity_decode('&#x'.$chex.';');
+                            $document .= html_entity_decode('&#x' . $chex . ';');
                         }
                         $isHex = false;
                         break;
@@ -306,7 +306,7 @@ class file2Text
                         } elseif ($c2 >= '0' && $c2 <= '9') {
                             $oct = preg_replace('#[^0-9]#', '', substr($texts[$i], $j + 1, 3));
                             $j += strlen($oct) - 1;
-                            $plain .= html_entity_decode('&#'.octdec($oct).';');
+                            $plain .= html_entity_decode('&#' . octdec($oct) . ';');
                         }
                         $j++;
                         break;
@@ -344,13 +344,13 @@ class file2Text
         for ($i = 0; $i < count($objects); $i++) {
             $currentObject = $objects[$i];
 
-            if (! preg_match('#stream(.*)endstream#ismU', $currentObject, $stream)) {
+            if (!preg_match('#stream(.*)endstream#ismU', $currentObject, $stream)) {
                 continue;
             }
             $stream = ltrim($stream[1]);
 
             $options = $this->getObjectOptions($currentObject);
-            if (! (empty($options['Length1']) && empty($options['Type']) && empty($options['Subtype']))) {
+            if (!(empty($options['Length1']) && empty($options['Type']) && empty($options['Subtype']))) {
                 continue;
             }
 
@@ -424,7 +424,7 @@ class file2Text
     {
         $arrfailAt = ['*', 'fonttbl', 'colortbl', 'datastore', 'themedata'];
         for ($i = 0; $i < count($arrfailAt); $i++) {
-            if (! empty($s[$arrfailAt[$i]])) {
+            if (!empty($s[$arrfailAt[$i]])) {
                 return false;
             }
         }
@@ -437,7 +437,7 @@ class file2Text
         $filename = $this->filename;
         // Read the data from the input file.
         $text = file_get_contents($filename);
-        if (! strlen($text)) {
+        if (!strlen($text)) {
             return '';
         }
 
@@ -451,7 +451,7 @@ class file2Text
 
             // Depending on current character select the further actions.
             switch ($c) {
-                // the most important key word backslash
+                    // the most important key word backslash
                 case '\\':
                     // read next character
                     $nc = $text[$i + 1];
@@ -474,12 +474,12 @@ class file2Text
                     elseif ($nc === "'") {
                         $hex = substr($text, $i + 2, 2);
                         if ($this->rtf_isPlainText($stack[$j])) {
-                            $document .= html_entity_decode('&#'.hexdec($hex).';');
+                            $document .= html_entity_decode('&#' . hexdec($hex) . ';');
                         }
                         //Shift the pointer.
                         $i += 2;
-                    // Since, we’ve found the alphabetic character, the next characters are control word
-                    // and, possibly, some digit parameter.
+                        // Since, we’ve found the alphabetic character, the next characters are control word
+                        // and, possibly, some digit parameter.
                     } elseif ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
                         $word = '';
                         $param = null;
@@ -491,18 +491,18 @@ class file2Text
                             // then we’re still reading the control word. If there were digits, we should stop
                             // since we reach the end of the control word.
                             if ($nc >= 'a' && $nc <= 'z' || $nc >= 'A' && $nc <= 'Z') {
-                                if (! empty($param)) {
+                                if (!empty($param)) {
                                     break;
                                 }
                                 $word .= $nc;
-                            // If it is a digit, store the parameter.
+                                // If it is a digit, store the parameter.
                             } elseif ($nc >= '0' && $nc <= '9') {
                                 $param .= $nc;
                             }
                             // Since minus sign may occur only before a digit parameter, check whether
                             // $param is empty. Otherwise, we reach the end of the control word.
                             elseif ($nc === '-') {
-                                if (! empty($param)) {
+                                if (!empty($param)) {
                                     break;
                                 }
                                 $param .= $nc;
@@ -516,12 +516,12 @@ class file2Text
                         // Start analyzing what we’ve read. We are interested mostly in control words.
                         $toText = '';
                         switch (strtolower($word)) {
-                            // If the control word is "u", then its parameter is the decimal notation of the
-                            // Unicode character that should be added to the output stream.
-                            // We need to check whether the stack contains \ucN control word. If it does,
-                            // we should remove the N characters from the output stream.
+                                // If the control word is "u", then its parameter is the decimal notation of the
+                                // Unicode character that should be added to the output stream.
+                                // We need to check whether the stack contains \ucN control word. If it does,
+                                // we should remove the N characters from the output stream.
                             case 'u':
-                                $toText .= html_entity_decode('&#x'.dechex($param).';');
+                                $toText .= html_entity_decode('&#x' . dechex($param) . ';');
                                 $ucDelta = @$stack[$j]['uc'];
                                 if ($ucDelta > 0) {
                                     $i += $ucDelta;

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace LaravelHelperObjectTools\Repositories;
 
-use App\Models\User;
-use App\Presenters\UserPresenter;
-use App\Repositories\Interfaces\UserRepository;
-use App\Validators\UserValidator;
+use LaravelHelperObjectTools\Models\User;
+use LaravelHelperObjectTools\Presenters\UserPresenter;
+use LaravelHelperObjectTools\Repositories\Interfaces\UserRepository;
+use LaravelHelperObjectTools\Validators\UserValidator;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;

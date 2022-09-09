@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace LaravelHelperObjectTools\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -44,7 +44,7 @@ trait ControllerTrait
     {
         $data['message'] = $message;
 
-        return response()->view('errors.'.$errorCode, $data, $errorCode);
+        return response()->view('errors.' . $errorCode, $data, $errorCode);
     }
 
     /**

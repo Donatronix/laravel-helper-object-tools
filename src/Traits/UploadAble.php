@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace LaravelHelperObjectTools\Traits;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use LaravelHelperObjectTools\Traits\FileUploader;
+use RuntimeException;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileCannotBeAdded;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
@@ -22,6 +24,16 @@ trait UploadAble
     use FileUploader;
 
     /**
+     * Get collection name
+     *
+     * @throws Exception
+     */
+    public function getCollectionName(): void
+    {
+        throw new RuntimeException('The model should implement `getCollectionName`');
+    }
+
+    /**
      * Add a file to the medialibrary. The file will be removed from
      * its original location.
      *
@@ -30,7 +42,7 @@ trait UploadAble
      */
     public function uploadMedia(string|UploadedFile $file, string $collection, ?string $filename = null): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMedia($file)
             ->usingName($filename ?? Str::random(40))
@@ -45,7 +57,7 @@ trait UploadAble
      */
     public function uploadMediaFromDisk(string $key, string $collection, ?string $filename = null, string $disk = 'public'): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMediaFromDisk($key, $disk)
             ->usingName($filename ?? Str::random(40))
@@ -61,7 +73,7 @@ trait UploadAble
      */
     public function uploadMediaFromUrl(string $url, string $collection, ?string $filename = null): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMediaFromUrl($url)
             ->usingName($filename ?? Str::random(40))
@@ -76,7 +88,7 @@ trait UploadAble
      */
     public function uploadMediaFromRequest(string $keyName, string $collection, ?string $filename = null): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMediaFromRequest($keyName)
             ->usingName($filename ?? Str::random(40))
@@ -90,7 +102,7 @@ trait UploadAble
      */
     public function uploadMultipleMediaFromRequest(array $keys, string $collection, ?string $filename = null): Collection
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMultipleMediaFromRequest($keys)
             ->usingName($filename ?? Str::random(40))
@@ -104,7 +116,7 @@ trait UploadAble
      */
     public function uploadAllMediaFromRequest(string $collection, ?string $filename = null): Collection
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addAllMediaFromRequest()
             ->usingName($filename ?? Str::random(40))
@@ -123,7 +135,7 @@ trait UploadAble
      */
     public function uploadMediaFromBase64(string $base64data, string $collection, ?string $allowedMimeTypes = null, ?string $filename = null): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->addMediaFromBase64($base64data, $allowedMimeTypes)
             ->usingName($filename ?? Str::random(40))
@@ -138,7 +150,7 @@ trait UploadAble
      */
     public function copyMediaFile(string|UploadedFile $file, string $collection): Media
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->copyMedia($file)
             ->toMediaCollection($collection);
@@ -149,7 +161,7 @@ trait UploadAble
      */
     public function getFiles(string $directory): Collection
     {
-        $directory = 'ajax/'.$directory;
+        $directory = 'ajax/' . $directory;
 
         return collect(File::Files($directory))
             ->sortBy(static function ($file) {
@@ -162,7 +174,7 @@ trait UploadAble
      */
     public function folderExists(string $directory): bool
     {
-        return File::isDirectory('ajax/'.$directory);
+        return File::isDirectory('ajax/' . $directory);
     }
 
     /**
@@ -171,7 +183,7 @@ trait UploadAble
      */
     public function attachMedia(string $directory, string $collection): void
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
         foreach ($this->getFiles($directory) as $file) {
             $this->uploadMedia($file->getPathname(), $collection);
         }
@@ -211,7 +223,7 @@ trait UploadAble
      */
     public function getUploads(?string $collection = null): mixed
     {
-        $collection = $collection ?? $this->collectionName;
+        $collection = $collection ?? $this->getCollectionName();
 
         return $this->getMedia($collection);
     }

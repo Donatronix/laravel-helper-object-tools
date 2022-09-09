@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace LaravelHelperObjectTools\Traits;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -51,7 +51,7 @@ trait FileUploader
      */
     public function uploadOne(UploadedFile $file, $folder = null, string $disk = 'public', $filename = null): false|string
     {
-        $name = ! is_null($filename) ? $filename : Str::random(25);
+        $name = !is_null($filename) ? $filename : Str::random(25);
         $ext = $file->getClientOriginalExtension();
         $tempName = $name;
         while (\file_exists(storage_path("$folder/$tempName.$ext"))) {

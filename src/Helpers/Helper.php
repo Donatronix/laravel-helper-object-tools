@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers;
+namespace LaravelHelperObjectTools\Helpers;
 
-use App\Helpers\compareDirectories\compareDirectories;
-use App\Helpers\compareImages\compareImages;
-use App\Helpers\Sentence\Sentence;
+use LaravelHelperObjectTools\Helpers\compareDirectories\compareDirectories;
+use LaravelHelperObjectTools\Helpers\compareImages\compareImages;
+use LaravelHelperObjectTools\Helpers\Sentence\Sentence;
 use Artesaos\SEOTools\Facades\OpenGraph;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Carbon\Carbon;
@@ -1780,13 +1780,13 @@ class Helper
         $string = null;
         try {
             $string = random_bytes($numberOfCharacters);
-        } catch (TypeError$e) {
+        } catch (TypeError $e) {
             // Well, it's an integer, so this IS unexpected.
             exit('An unexpected error has occurred');
-        } catch (Error$e) {
+        } catch (Error $e) {
             // This is also unexpected because 32 is a reasonable integer.
             exit('An unexpected error has occurred');
-        } catch (Exception$e) {
+        } catch (Exception $e) {
             // If you get this message, the CSPRNG failed hard.
             exit('Could not generate a random string. Is our OS secure?');
         }
@@ -4629,6 +4629,5 @@ HEAD;
             return '1 byte';
         }
         return '0 bytes';
-
     }
 }

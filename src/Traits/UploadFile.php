@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits;
+namespace LaravelHelperObjectTools\Traits;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
@@ -21,7 +21,7 @@ trait UploadFile
         $name = $filename ?? Str::random(25);
         $extension = $file->getClientOriginalExtension();
         $tempName = $name;
-        while (\file_exists($folder.'/'.$tempName.'.'.$extension)) {
+        while (\file_exists($folder . '/' . $tempName . '.' . $extension)) {
             if (count(\explode('_', $tempName)) === 1) {
                 $tempName .= '_1';
             } else {

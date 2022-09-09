@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories\Interfaces;
+namespace LaravelHelperObjectTools\Repositories\Interfaces;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 

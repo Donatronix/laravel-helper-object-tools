@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers\Sentence;
+namespace LaravelHelperObjectTools\Helpers\Sentence;
 
 /**
  * Segments sentences.
@@ -91,12 +91,12 @@ class Sentence
             $is_delimiter = $length[1];
             $is_captured = $length[2];
 
-            if ($limit > 0 && ! $is_delimiter && ($length[0] || ~$flags & PREG_SPLIT_NO_EMPTY) && ++$count > $limit) {
+            if ($limit > 0 && !$is_delimiter && ($length[0] || ~$flags & PREG_SPLIT_NO_EMPTY) && ++$count > $limit) {
                 if ($length[0] > 0 || ~$flags & PREG_SPLIT_NO_EMPTY) {
                     $parts[] = $flags & PREG_SPLIT_OFFSET_CAPTURE ? [mb_strcut($string, $position), $position] : mb_strcut($string, $position);
                 }
                 break;
-            } elseif ((! $is_delimiter || ($flags & PREG_SPLIT_DELIM_CAPTURE && $is_captured)) && ($length[0] || ~$flags & PREG_SPLIT_NO_EMPTY)) {
+            } elseif ((!$is_delimiter || ($flags & PREG_SPLIT_DELIM_CAPTURE && $is_captured)) && ($length[0] || ~$flags & PREG_SPLIT_NO_EMPTY)) {
                 $parts[] = $flags & PREG_SPLIT_OFFSET_CAPTURE ? [mb_strcut($string, $position, $length[0]), $position] : mb_strcut($string, $position, $length[0]);
             }
 
@@ -201,12 +201,12 @@ class Sentence
             if (in_array($char, $this->terminals) !== $is_terminal) {
                 $parts[] = $part;
                 $part = '';
-                $is_terminal = ! $is_terminal;
+                $is_terminal = !$is_terminal;
             }
             $part .= $char;
         }
 
-        if (! empty($part)) {
+        if (!empty($part)) {
             $parts[] = $part;
         }
 
@@ -252,7 +252,7 @@ class Sentence
                 }
             }
         }
-        if (! empty($merge)) {
+        if (!empty($merge)) {
             $merges[] = $merge;
         }
 
@@ -293,7 +293,7 @@ class Sentence
 
             // merge previous fragment with this
             if ($previous_is_abbreviation === true) {
-                $current_string = $previous_string.$current_string;
+                $current_string = $previous_string . $current_string;
             }
             $return_fragment[$i] = $current_string;
 
@@ -345,14 +345,15 @@ class Sentence
         $return = [];
         foreach ($statements as $statement) {
             // detect end quote - if the entire string is a quotation mark, or it's [quote, space, lowercase]
-            if (trim($statement) == '"' || trim($statement) == "'" ||
-                    (
-                        (substr($statement, 0, 1) === '"' || substr($statement, 0, 1) === "'")
-                        and substr($statement, 1, 1) === ' '
-                        and ctype_lower(substr($statement, 2, 1)) === true
-                    )
+            if (
+                trim($statement) == '"' || trim($statement) == "'" ||
+                (
+                    (substr($statement, 0, 1) === '"' || substr($statement, 0, 1) === "'")
+                    and substr($statement, 1, 1) === ' '
+                    and ctype_lower(substr($statement, 2, 1)) === true
+                )
             ) {
-                $statement = $previous_statement.$statement;
+                $statement = $previous_statement . $statement;
             } else {
                 $i++;
             }
@@ -395,7 +396,7 @@ class Sentence
             $sentence .= $short;
             $previous_word_ending = mb_substr($short, -1);
         }
-        if (! empty($sentence)) {
+        if (!empty($sentence)) {
             $sentences[] = $sentence;
         }
 

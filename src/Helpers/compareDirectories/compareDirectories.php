@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers\compareDirectories;
+namespace LaravelHelperObjectTools\Helpers\compareDirectories;
 
 /**
  * * Copyright © Larry Wakeman - 2013
@@ -71,12 +71,12 @@ class compareDirectories
         $workingDir = '';
         chdir($this->source);
         $source = $this->doTree('.', $source);
-        if (! is_array($source)) {
+        if (!is_array($source)) {
             return;
         }
         chdir($this->update);
         $destination = $this->doTree('.', $destination);
-        if (! is_array($destination)) {
+        if (!is_array($destination)) {
             exit;
         }
         chdir($currentDirectory);
@@ -84,17 +84,17 @@ class compareDirectories
             foreach ($value as $file => $hash) {
                 if (isset($destination[$dir][$file])) {
                     if ($hash !== $destination[$dir][$file]) {
-                        $this->changed[] = $dir.'/'.$file;
+                        $this->changed[] = $dir . '/' . $file;
                     }
                 } else {
-                    $this->removed[] = $dir.'/'.$file;
+                    $this->removed[] = $dir . '/' . $file;
                 }
             }
         }
         foreach ($destination as $dir => $value) {
             foreach ($value as $file => $hash) {
-                if (! isset($source[$dir][$file])) {
-                    $this->added[] = $dir.'/'.$file;
+                if (!isset($source[$dir][$file])) {
+                    $this->added[] = $dir . '/' . $file;
                 }
             }
         }
@@ -105,7 +105,7 @@ class compareDirectories
         $ignores = [10, 13];
         $fh = fopen($file, 'r');
         $buffer = '';
-        while (! feof($fh)) {
+        while (!feof($fh)) {
             $buffer .= fgets($fh);
         }
         fclose($fh);
@@ -115,7 +115,7 @@ class compareDirectories
             }
         }
 
-        return hash('crc32', $buffer).hash('crc32b', $buffer);
+        return hash('crc32', $buffer) . hash('crc32b', $buffer);
     }
 
     private function doTree($dir, &$array)
@@ -124,28 +124,28 @@ class compareDirectories
             return $array;
         }
         $filetypes = ['php', 'js', 'htm', 'html', 'css', 'tpl', 'ini', 'txt'];
-        if (! $dh = opendir($dir)) {
-            echo 'error opening '.$dir.'</h3>';
+        if (!$dh = opendir($dir)) {
+            echo 'error opening ' . $dir . '</h3>';
 
             return false;
         }
         while ($file = readdir($dh)) {
-            if (! ($file !== '.' && $file !== '..')) {
+            if (!($file !== '.' && $file !== '..')) {
                 continue;
             }
-            if (is_dir($dir.'/'.$file)) {
+            if (is_dir($dir . '/' . $file)) {
                 if (count($array) === 0) {
                     $array[0] = 'Temp';
                 }
-                if (! $this->doTree($dir.'/'.$file, $array)) {
+                if (!$this->doTree($dir . '/' . $file, $array)) {
                     return false;
                 }
             } else {
-                if (filesize($dir.'/'.$file)) {
+                if (filesize($dir . '/' . $file)) {
                     foreach ($filetypes as $type) {
-                        if (strpos($file.'|', '.'.$type.'|') !== 0) {
+                        if (strpos($file . '|', '.' . $type . '|') !== 0) {
                             set_time_limit(30);
-                            $array[$dir][$file] = $this->checksum($dir.'/'.$file); //md5_file($dir.'/'.$file, false);
+                            $array[$dir][$file] = $this->checksum($dir . '/' . $file); //md5_file($dir.'/'.$file, false);
                         }
                     }
                 }

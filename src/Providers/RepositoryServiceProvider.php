@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Providers;
+namespace LaravelHelperObjectTools\Providers;
 
-use App\Repositories\Interfaces\UserRepository;
-use App\Repositories\UserRepositoryEloquent;
+use LaravelHelperObjectTools\Repositories\Interfaces\UserRepository;
+use LaravelHelperObjectTools\Repositories\UserRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider

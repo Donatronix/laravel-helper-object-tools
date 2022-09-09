@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace LaravelHelperObjectTools\Services;
 
-use App\Services\Interfaces\BaseServiceInterface;
+use LaravelHelperObjectTools\Services\Interfaces\BaseServiceInterface;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Prettus\Validator\Contracts\ValidatorInterface;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Models;
+namespace LaravelHelperObjectTools\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +37,6 @@ abstract class BaseModel extends Model
                 } while (!self::where('slug', $slug)->exists());
                 $model->slug = $slug;
             }
-
         });
     }
 

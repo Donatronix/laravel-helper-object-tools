@@ -5,12 +5,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Donaldblessing\\LaravelHelperObjectTools\\": "src/"
+            "LaravelHelperObjectTools\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Donaldblessing\\LaravelHelperObjectTools\\Tests\\": "tests/"
+            "LaravelHelperObjectTools\\Tests\\": "tests/"
         }
     },
     "authors": [
@@ -25,7 +25,9 @@
     "require": {
         "php": "^8.0",
         "illuminate/contracts": "^9.22",
-        "illuminate/support": "9.x-dev"
+        "illuminate/support": "9.x-dev",
+        "php-ffmpeg/php-ffmpeg": "^1.0",
+        "spatie/laravel-medialibrary": "^10.4"
     },
     "require-dev": {
         "laravel/pint": "^1.1",
@@ -34,6 +36,9 @@
         "phpstan/phpstan": "^1.8"
     },
     "scripts": {
+        "pre-update-cmd": [
+            "Composer\\Config::disableProcessTimeout"
+        ],
         "test": "./vendor/bin/pest",
         "fix": "./vendor/bin/pint",
         "check": "./vendor/bin/pint --test -v",

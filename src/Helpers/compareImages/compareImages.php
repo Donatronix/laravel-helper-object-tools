@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Helpers\compareImages;
+namespace LaravelHelperObjectTools\Helpers\compareImages;
 
 class compareImages
 {
@@ -88,7 +88,7 @@ class compareImages
         $i1 = $this->createImage($a);
         $i2 = $this->createImage($b);
 
-        if (! $i1 || ! $i2) {
+        if (!$i1 || !$i2) {
             return false;
         }
 

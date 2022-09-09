@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Providers;
+namespace LaravelHelperObjectTools\Providers;
 
-use App\Services\BaseService;
-use App\Services\Interfaces\BaseServiceInterface;
-use App\Services\Interfaces\UserServiceInterface;
-use App\Services\UserService;
+use LaravelHelperObjectTools\Services\BaseService;
+use LaravelHelperObjectTools\Services\Interfaces\BaseServiceInterface;
+use LaravelHelperObjectTools\Services\Interfaces\UserServiceInterface;
+use LaravelHelperObjectTools\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

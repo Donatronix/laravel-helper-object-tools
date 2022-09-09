@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services;
+namespace LaravelHelperObjectTools\Services;
 
-use App\Models\User;
-use App\Repositories\Interfaces\UserRepository;
-use App\Validators\UserValidator;
+use LaravelHelperObjectTools\Models\User;
+use LaravelHelperObjectTools\Repositories\Interfaces\UserRepository;
+use LaravelHelperObjectTools\Validators\UserValidator;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -93,7 +93,6 @@ class UserService extends BaseService implements Interfaces\UserServiceInterface
             return $query->role($role)
                 ->orderBy('created_at', 'desc');
         })->get();
-
     }
 
     /**
@@ -180,5 +179,4 @@ class UserService extends BaseService implements Interfaces\UserServiceInterface
 
         return $user;
     }
-
 }
