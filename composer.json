@@ -1,0 +1,56 @@
+{
+    "name": "donaldblessing/laravel-helper-object-tools",
+    "description": "A package with helper functions for Laravel projects",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Donaldblessing\\LaravelHelperObjectTools\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Donaldblessing\\LaravelHelperObjectTools\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "role": "Developer",
+            "name": "Donald Blessing",
+            "email": "donaldblessing9@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^8.0",
+        "illuminate/contracts": "^9.22",
+        "illuminate/support": "9.x-dev"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.1",
+        "orchestra/testbench": "^7.6",
+        "pestphp/pest": "^1.21",
+        "phpstan/phpstan": "^1.8"
+    },
+    "scripts": {
+        "test": "./vendor/bin/pest",
+        "fix": "./vendor/bin/pint",
+        "check": "./vendor/bin/pint --test -v",
+        "static": "./vendor/bin/phpstan analyse",
+        "all": [
+            "@test",
+            "@fix",
+            "@check",
+            "@static"
+        ]
+    },
+    "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
